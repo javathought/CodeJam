@@ -4,7 +4,7 @@ import java.io.{File, PrintWriter}
 
 import scala.io.Source
 
-/**a: Counting Sheep
+/** A: Counting Sheep
   * Qualification Round 2016 -
   */
 object CountSheep extends App {
