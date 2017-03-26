@@ -1,12 +1,12 @@
 package puzzle2016
 
-import java.io.{File, PrintWriter}
+import better.files.Scanner
+import puzzle.Solver
 
 /** C: Coin Jam
   * Qualification Round 2016 -
   */
-object CoinJam extends App {
-
+object CoinJam extends Solver("coinJam.txt") {
 
   // generate String of a Coin Jam candidate
   def leftPad(s: String, length: Int, repeat: String): String = {
@@ -14,9 +14,6 @@ object CoinJam extends App {
     else repeat.padTo(length - s.length, repeat).mkString + s
 
   }
-
-  // Do not need to test all possible divisers
-  val mxaDivider = BigInt("1000", 10)
 
   /**
     * search for a diviser less than 1000 (limitation for performance)
@@ -38,7 +35,6 @@ object CoinJam extends App {
     }
   }
 
-
   /**
     * generates a coin jam response in a pair format
     * @param num the iteration a coin jam to generate
@@ -46,24 +42,18 @@ object CoinJam extends App {
     * @return a candidate coin jam in par format : (is a coin jam, response String expected)
     */
   def jam(num: Int, length: Int): (Boolean, String) = {
-    var prime = false
-    var res = ""
     val candidate = "1" +
       leftPad(num.toBinaryString, length - 2, "0") + "1"
 
-    res = s"$candidate"
-
-    for (base <- 2 to 10) yield {
+    val divisors = for (base <- 2 to 10) yield {
       val parsedInt =  BigInt(candidate, base)
-
       val div = divisor(parsedInt)
-      res += s" $div"
-      if (div == parsedInt) prime = true
+      if (div == parsedInt) (true, div) else (false, div)
 
     }
 
-    (prime, res)
-
+    val res = divisors map {case (a,b) => (a, b.toString)} reduce ((x,y) => (x._1 || y._1, x._2 + " " + y._2))
+    (res._1, s"$candidate" + " " + res._2)
   }
 
   // generate list
@@ -87,9 +77,13 @@ object CoinJam extends App {
     Stream.from(1) map (jam(_, size)) filter (! _._1) map {_._2 + "\n"} take nb
   }
 
-  val pw = new PrintWriter(new File("coinJamBig-faster.txt" ))
-  pw.write(s"Case #1:\n")
-  streamJam(32, 500) foreach {pw.write}
-  pw.close()
+  // Do not need to test all possible divisers
+  lazy val mxaDivider = BigInt("1000", 10)
 
+  override def solve(in: Scanner): String = {
+    val size = in.next[Int]
+    val nb = in.next[Int]
+
+    "\n" + (streamJam(size,  nb) reduce(_ + _))
+  }
 }
