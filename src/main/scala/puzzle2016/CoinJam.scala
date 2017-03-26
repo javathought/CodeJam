@@ -24,9 +24,11 @@ object CoinJam extends Solver("coinJam.txt") {
 
     // simple algo : divide by odd numbers under 1000
     def divHelper(i: BigInt, integr: BigInt): BigInt = {
-      if (integr % i == 0) i
-      else if (i > mxaDivider ) integr  // limit for performance
-      else divHelper(i + 2, integr)
+      integr match {
+        case x if integr % i == 0 => i
+        case y if i > mxaDivider => y  // limit for performance
+        case _ => divHelper(i + 2, integr)
+      }
     }
 
     if (candidate == 1 ) 1
