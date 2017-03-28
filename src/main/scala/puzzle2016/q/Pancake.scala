@@ -10,13 +10,6 @@ import scala.annotation.tailrec
   */
 object Pancake extends Solver("B-large-practice.in.txt") {
 
-  def switch(c: Char): Char = {
-    c match {
-      case '+' => '-'
-      case '-' => '+'
-    }
-  }
-
   @tailrec
   def lnr(t: List[Char]): Int = {
     t match {
