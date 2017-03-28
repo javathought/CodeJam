@@ -1,4 +1,4 @@
-package puzzle2016
+package puzzle2016.q
 
 import better.files.Scanner
 import puzzle.Solver

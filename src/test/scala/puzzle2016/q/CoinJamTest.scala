@@ -1,9 +1,9 @@
-package puzzle2016
+package puzzle2016.q
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import puzzle2016.CoinJam._
+import CoinJam._
 
 
 /**

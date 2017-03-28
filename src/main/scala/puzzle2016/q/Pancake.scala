@@ -1,10 +1,9 @@
-package puzzle2016
+package puzzle2016.q
 
 import better.files.Scanner
 import puzzle.Solver
 
 import scala.annotation.tailrec
-import scala.io.Source
 
 /** B: Pancake Revenge
   * Qualification Round 2016 -
